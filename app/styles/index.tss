@@ -1,0 +1,12 @@
+"Window":{
+	backgroundColor: "#fff",
+	exitOnClose: true,
+	navbarHidden: true
+}
+
+"#webview":{
+	top: 0,
+	bottom: 0,
+	left: 0,
+	right: 0
+}

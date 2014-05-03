@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+
+	<head>
+		<!-- In production, only one script (pdf.js) is necessary -->
+		<!-- In production, change the content of PDFJS.workerSrc below -->
+		<script type="text/javascript" src="pdf.jas"></script>
+
+		<script type="text/javascript">
+			// Specify the main script used to create a new PDF.JS web worker.
+			// In production, leave this undefined or change it to point to the
+			// combined `pdf.worker.js` file.
+			PDFJS.workerSrc = 'pdf.worker.jas';
+
+			PDFJS.getDocument('pdffile').then(function(pdf) {
+				// Using promise to fetch the page
+
+				var viewer = document.getElementById('viewer');
+				var pageNumber = 1;
+				renderPage(viewer, pdf, pageNumber++, function pageRenderingComplete() {
+					if (pageNumber > pdf.numPages) {
+						return;
+						// All pages rendered
+					}
+					// Continue rendering of the next page
+					renderPage(viewer, pdf, pageNumber++, pageRenderingComplete);
+				});
+			});
+
+			function renderPage(div, pdf, pageNumber, callback) {
+				pdf.getPage(pageNumber).then(function(page) {
+					var scale = 1.5;
+					var viewport = page.getViewport(scale);
+
+					var pageDisplayWidth = viewport.width;
+					var pageDisplayHeight = viewport.height;
+
+					var pageDivHolder = document.createElement('div');
+					pageDivHolder.className = 'pdfpage';
+					pageDivHolder.style.width = pageDisplayWidth + 'px';
+					pageDivHolder.style.height = pageDisplayHeight + 'px';
+					div.appendChild(pageDivHolder);
+
+					// Prepare canvas using PDF page dimensions
+					var canvas = document.createElement('canvas');
+					var context = canvas.getContext('2d');
+					canvas.width = pageDisplayWidth;
+					canvas.height = pageDisplayHeight;
+					pageDivHolder.appendChild(canvas);
+
+					// Render PDF page into canvas context
+					var renderContext = {
+						canvasContext : context, viewport : viewport
+					};
+					page.render(renderContext).promise.then(callback);
+
+					// Prepare and populate form elements layer
+					var formDiv = document.createElement('div');
+					pageDivHolder.appendChild(formDiv);
+
+				});
+			}
+
+		</script>
+		<style type="text/css">
+			html, body {
+				margin: 0px;
+			}
+
+			.pdfpage {
+				position: relative;
+				top: 0;
+				left: 0;
+				margin: 00px;
+			}
+			.pdfpage > canvas {
+				position: absolute;
+				top: 0;
+				left: 0;
+			}
+			.pdfpage > div {
+				position: absolute;
+				top: 0;
+				left: 0;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="viewer"></div>
+	</body>
+
+</html>
