@@ -4,8 +4,12 @@
 	navbarHidden: true
 }
 
+"#menu":{
+	top:0,height:40,left:0,right:0,layout:"horizontal"
+}
+
 "#webview":{
-	top: 0,
+	top: 40,
 	bottom: 0,
 	left: 0,
 	right: 0

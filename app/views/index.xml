@@ -1,6 +1,9 @@
 <Alloy>
 <Window>
-		<WebView id="webview">
-		</WebView>
+		<View id="menu">
+			<Button id="btn_prev">Zurück</Button>
+			<Button id="btn_next">Vor</Button>
+		</View>
+		<WebView id="webview"/>
 	</Window>
 </Alloy>
