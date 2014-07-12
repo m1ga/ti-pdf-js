@@ -1,1 +1,0 @@
-module.exports = [{"isApi":true,"priority":1000.0002,"key":"Window","style":{backgroundColor:"#fff",exitOnClose:true,navbarHidden:true,}},{"isId":true,"priority":100000.0003,"key":"menu","style":{top:0,height:40,left:0,right:0,layout:"horizontal",}},{"isId":true,"priority":100000.0004,"key":"webview","style":{top:40,bottom:0,left:0,right:0,}}];
